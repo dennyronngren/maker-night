@@ -82,11 +82,13 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\opencv\build\x64\vc15;</IncludePath>
     <LibraryPath>C:\opencv\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\opencv\build\include</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\opencv\build\x64\vc15;</IncludePath>
     <LibraryPath>C:\opencv\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\opencv\build\include</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
