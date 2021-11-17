@@ -32,3 +32,5 @@
 *.app
 /.vs
 /src/ArucoMarkerCV/.vs/ArucoMarkerCV/v16
+/src/ArucoMarkerCV/Debug
+/src/ArucoMarkerCV/x64/Debug
