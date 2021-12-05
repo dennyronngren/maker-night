@@ -9,6 +9,6 @@ The current state of the code is that it runs OpenCV and shows images on the scr
 add the Aruco marker functionality.
 
 # Setup
-You need to install OpenCV binaries in c:\OpenCV <-- _PLEASE NOTE_ 
+You need to install OpenCV binaries in c:\OpenCV <-- _PLEASE NOTE_ . Downloads are to be found here https://opencv.org/releases/
 
 You need to do this before you build in VS.
