@@ -1,64 +1,64 @@
-import processing.serial.*;
+#include <AFMotor.h>
 
-// The serial port:
-Serial mySerialPort;       
+AF_DCMotor motorLeft(1, MOTOR12_64KHZ); // create motor #1, 64KHz pwm
+AF_DCMotor motorRight(3, MOTOR12_64KHZ); // create motor #3, 64KHz pwm
+AF_DCMotor motorHat(4, MOTOR12_64KHZ); // create motor #4, 64KHz pwm
 
-
-color fillVal = color(0);
+void up() { Serial.write('R');  // RED in Processing }
+void down() { Serial.write('G');  // GREEN in Processing }
+void left() { Serial.write('Y');  // YELLOW in Processing }
+void right() { Serial.write('O');  // ORANGE in Processing }
 
 void setup() {
-  size(100, 100);
-  noStroke();
-  background(0);
-  printArray(Serial.list()); // do this to find your arduino
-  // Open the port you are using at the rate you want:
-  mySerialPort = new Serial(this, Serial.list()[0], 115200);
-  mySerialPort.clear();
+  Serial.begin(115200); // set up Serial library at 115200 bps
+  Serial.println("Motor test!");
+  
+  motorLeft.setSpeed(255); // set the speed to 200/255
+  
+  motorRight.setSpeed(255); // set the speed to 200/255
+  
+  motorHat.setSpeed(255); // set the speed to 200/255
+  motorHat.run(FORWARD); // stopped
 }
 
-void draw() { 
-  background(fillVal);
-}
+void loop() {
+  char incomingChar = 0;   // for incoming serial data
 
-//The keyPressed() function is called once every time a key is pressed.
-// see https://processing.org/reference/keyCode.html
-
-void keyPressed() {
-
-  if (key == CODED) {
-    switch(keyCode) {
-    case UP: 
-      mySerialPort.write('u');
-      break;
-    case DOWN: 
-      mySerialPort.write('d');
-      break;    
-    case LEFT: 
-      mySerialPort.write('l');
-      break;    
-    case RIGHT: 
-      mySerialPort.write('r');
-      break;
+  if (Serial.available() > 0) {
+    incomingChar = Serial.read();
+    switch (incomingChar) {
+      case 'u':
+//        up();
+        motorLeft.run(FORWARD); // turn it on going forward
+        motorRight.run(FORWARD); // turn it on going forward
+        delay(50);
+        break;
+      case 'd':
+//        down();
+        motorLeft.run(BACKWARD); // turn it on going forward
+        motorRight.run(BACKWARD); // turn it on going forward
+        delay(50);
+        break;
+      case 'l':
+//        left();
+        motorLeft.run(BACKWARD); // turn it on going forward
+        motorRight.run(FORWARD); // turn it on going forward
+        delay(50);
+        break;
+      case 'r':
+//        right();
+        motorLeft.run(FORWARD); // turn it on going forward
+        motorRight.run(BACKWARD); // turn it on going forward
+        delay(50);
+        break;
+      default:
+        Serial.write('B');  // BLACK
+        break;
     }
-  } else fillVal = color(0);
+  } else {
+    delay(50);
+    motorLeft.run(RELEASE); // stopped
+    motorRight.run(RELEASE); // stopped
+    incomingChar = 0; // not really needed but in case you want to do things in the loop upon receiving new chars. if (incomingChar == 0) then no new char was received, otherwise later in the loop you still have the char received
+  }
 }
-
-//void serialEvent(Serial p) {
-//  switch(p.read()) {
-//  case 'R': 
-//    fillVal = #FF0000;
-//    break;
-//  case 'G': 
-//    fillVal = #00FF00;
-//    break;    
-//  case 'Y': 
-//    fillVal = #FFFF00;
-//    break;    
-//  case 'O': 
-//    fillVal = #FF7F00;
-//    break;
-//  default: 
-//    fillVal = #000000;
-//    break;
-//  }
-//}
